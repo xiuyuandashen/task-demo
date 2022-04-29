@@ -18,6 +18,11 @@ public class DemoApplication {
 		return "hello world";
 	}
 
+	@GetMapping("/test")
+	String JenkinsTest(){
+		return "success!";
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
