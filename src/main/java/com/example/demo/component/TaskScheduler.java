@@ -121,6 +121,10 @@ public class TaskScheduler {
      */
     public void stop(String taskId) {
         // 停止任务
+        if(TaskScheduler.runTasks.get(taskId) == null) {
+            throw new RuntimeException("定时任务不存在");
+        }
+        
         TaskScheduler.runTasks.get(taskId).cancel(true);
 
         TaskScheduler.runTasks.remove(taskId);
