@@ -17,6 +17,10 @@ import java.util.List;
  * Class生成
  */
 public class classGenerate {
+   
+   
+   public static Logger logger = LoggerFactory.getLogger(classGenerate.class);
+   
    /**
      * 生成java文件并加载class
      *
