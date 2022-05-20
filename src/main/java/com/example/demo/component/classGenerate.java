@@ -24,36 +24,37 @@ public class classGenerate {
      * @throws Exception
      */
     public static void createStudentByFile(String path,String JavaCode) throws Exception{
-//        String studentString = "package org.myself.pojo;public class Test{private String studentId;public String getStudentId(){return this.studentId;}public void setStudentId(String studentId){this.studentId = studentId;}}";
-        String fileName = System.getProperty("user.dir") + "/src/main/java"+path;
+//        String fileName = System.getProperty("user.dir") + "/src/main/java"+path;
+//        String fileName = "E:/data/JavaCode"+path;
+        String fileName = "/data/JavaCode"+path;
+        logger.info("fileName:[{}]",fileName);
         File file = new File(fileName);
+        if(!file.exists()){
+            file.getParentFile().mkdirs();
+        }
         FileWriter fileWriter = new FileWriter(file);
         fileWriter.write(JavaCode);
         fileWriter.flush();
         fileWriter.close();
-
-
+        // /E:/project/hello_world/target/classes/
+        URL location = DemoApplication.class.getProtectionDomain().getCodeSource().getLocation();
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         StandardJavaFileManager manager = compiler.getStandardFileManager(null,null,null);
         Iterable<? extends JavaFileObject> javaFileObjects = manager.getJavaFileObjects(fileName);
-        String dest = System.getProperty("user.dir") + "/target/classes";
-
+        String dest = location.getPath() + path;
         //options就是指定编译输入目录，与我们命令行写javac -d C://是一样的
-
         List<String> options = new ArrayList<String>();
         options.add("-d");
         options.add(dest);
         JavaCompiler.CompilationTask task = compiler.getTask(null,manager,null,options,null,javaFileObjects);
         task.call();
         manager.close();
-        URL[] urls = new URL[]{new URL("file:/" + System.getProperty("user.dir") + "/target/classes")};
+//        URL[] urls = new URL[]{new URL("file:/" + System.getProperty("user.dir") + "/target/classes")};
 
         //加载class时要告诉你的classloader去哪个位置加载class文件
 
-        ClassLoader classLoader = new URLClassLoader(urls);
+//        ClassLoader classLoader = new URLClassLoader(urls);
 //        Object student = classLoader.loadClass("com.example.demo.Task.HelloTask2").newInstance();
-
-
     }
 
 }
